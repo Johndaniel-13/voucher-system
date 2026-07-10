@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ─── Utilities ─── */
+.btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+}
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #a5b4fc;
+  border: 2px solid #6366f1;
+}
+.btn-outline:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.card {
+  background: rgba(30, 30, 50, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.input::placeholder {
+  color: #64748b;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.badge-success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+.badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+.badge-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.badge-info {
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+}
