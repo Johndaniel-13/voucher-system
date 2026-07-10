@@ -1,0 +1,4 @@
+# Tell Railway to install Tesseract (system dependency for OCR)
+[phases.setup]
+  nixPkgs = ["...", "tesseract5"]
+  aptPkgs = ["tesseract-ocr", "tesseract-ocr-eng"]
