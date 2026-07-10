@@ -1,0 +1,12 @@
+# Railway auto-deploy configuration
+# Railway reads this file and auto-deploys when you push to GitHub
+
+[build]
+  builder = "nixpacks"
+  buildCommand = "apt-get update && apt-get install -y tesseract-ocr && pip install -r requirements.txt"
+
+[deploy]
+  startCommand = "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
+
+[service]
+  name = "voucher-backend"
