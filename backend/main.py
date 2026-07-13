@@ -31,13 +31,17 @@ load_dotenv()
 
 app = FastAPI(title="Voucher Code System", version="1.0.0")
 
-# CORS — allow frontend (Vercel) to call this API
+# CORS — allow frontend (Vite localhost + future deployment)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict to your Vercel domain
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
@@ -123,16 +127,14 @@ async def request_voucher(screenshot: UploadFile = File(...)):
       4. If genuine → issue next available voucher code
       5. Store UTR + voucher code in database
     """
-    # Step 1: Read the uploaded screenshot
     if not screenshot.content_type or not screenshot.content_type.startswith("image/"):
         raise HTTPException(400, "Please upload a valid image file (PNG, JPG, etc.)")
 
     image_bytes = await screenshot.read()
 
-    if len(image_bytes) > 10 * 1024 * 1024:  # 10MB limit
+    if len(image_bytes) > 10 * 1024 * 1024:
         raise HTTPException(400, "File too large. Maximum 10MB allowed.")
 
-    # Step 2: Forgery detection — is this an AI-generated fake?
     forgery_result = is_genuine_screenshot(image_bytes)
 
     if not forgery_result["is_genuine"]:
@@ -143,7 +145,6 @@ async def request_voucher(screenshot: UploadFile = File(...)):
             f"Flags: {'; '.join(forgery_result['flags']) if forgery_result['flags'] else 'None'}"
         )
 
-    # Step 3: OCR — extract UTR/payment number
     ocr_result = extract_utr_from_image(image_bytes)
 
     if not ocr_result["success"]:
@@ -156,13 +157,11 @@ async def request_voucher(screenshot: UploadFile = File(...)):
 
     utr_number = ocr_result["utr_number"]
 
-    # Step 4: Issue a voucher code
     voucher = get_unused_voucher()
 
     if not voucher:
         raise HTTPException(400, "Sorry, all voucher codes have been claimed!")
 
-    # Step 5: Save to database
     mark_voucher_used(voucher["voucher_code"], utr_number)
 
     counts = get_voucher_count()
